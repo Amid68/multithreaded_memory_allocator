@@ -23,24 +23,8 @@ static size_t align_size(size_t size) {
     return (size + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1);
 }
 
-// Data Structures
-typedef struct memory_block {
-    size_t size;
-    int free;
-    struct memory_block* next;
-    struct memory_block* prev;
-} memory_block_t;
-
 static memory_block_t* free_list = NULL;
 static pthread_mutex_t allocator_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-// Helper Functions
-static memory_block_t* extend_heap(memory_block_t* last, size_t size);
-static memory_block_t* find_block(size_t size);
-static void split_block(memory_block_t* block, size_t size);
-static memory_block_t* get_block(void* ptr);
-static int valid_block(memory_block_t* block);
-static void merge_blocks(memory_block_t* block);
 
 int allocator_init(void) {
     // Initialization if required
@@ -139,8 +123,6 @@ void* allocator_calloc(size_t nmemb, size_t size) {
     }
     return ptr;
 }
-
-// Internal Helper Function Implementations
 
 static memory_block_t* find_block(size_t size) {
     memory_block_t* current = free_list;

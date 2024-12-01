@@ -1,6 +1,6 @@
 /**
  * @file allocator.h
- * @briief Memory allocator interface.
+ * @brief Memory allocator interface.
  * 
  * @author Ameed Othman 
  * @date 30/11/2024
